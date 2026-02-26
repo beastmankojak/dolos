@@ -47,10 +47,11 @@ fn outputs_match_asset(
         || outputs.iter().any(|o| {
             o.assets.iter().any(|ma| {
                 ma.policy_id.eq(&asset_pattern.policy_id)
-                    && ma
-                        .assets
-                        .iter()
-                        .any(|a| a.name.eq(&asset_pattern.asset_name))
+                    && (asset_pattern.asset_name.is_empty()
+                        || ma
+                            .assets
+                            .iter()
+                            .any(|a| a.name.eq(&asset_pattern.asset_name)))
             })
         })
 }
@@ -98,10 +99,11 @@ fn matches_cardano_pattern(tx_pattern: &u5c::cardano::TxPattern, tx: &u5c::carda
         (asset_pattern.asset_name.is_empty() && asset_pattern.policy_id.is_empty())
             || tx.mint.iter().any(|ma| {
                 ma.policy_id.eq(&asset_pattern.policy_id)
-                    && ma
-                        .assets
-                        .iter()
-                        .any(|a| a.name.eq(&asset_pattern.asset_name))
+                    && (asset_pattern.asset_name.is_empty()
+                        || ma
+                            .assets
+                            .iter()
+                            .any(|a| a.name.eq(&asset_pattern.asset_name)))
             })
     });
 
