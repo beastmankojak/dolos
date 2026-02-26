@@ -1,4 +1,4 @@
-FROM rust:1.93-slim AS builder
+FROM rust:1.93-slim-bookworm AS builder
 COPY . /opt/dolos
 WORKDIR /opt/dolos
 RUN apt update && apt install -y pkg-config libssl-dev && rm -rf /var/lib/apt/lists/*\
